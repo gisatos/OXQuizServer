@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.myquiz.quiz.reportQuiz">
+  <!-- r을 VO에 포함하는 것에 대해서 약간의 의문 -->
+  <select id="selectRqList" resultType="com.myquiz.quiz.domain.QuizVO">
+  		select q.*, rq.r from quiz q left outer join (select q_id, count(*) 
+  		as r from report_quiz group by q_id) rq on q.id = rq.q_id having r > 0 order by r asc
+  	</select>
+  	
+  	
+ 	<insert id="insertReportQuiz" parameterType="com.myquiz.quiz.domain.ReportQuizVO">
+ 		insert into report_quiz (m_id, q_id, reason) values (#{m_id}, #{q_id}, #{reason})
+ 	</insert>
+ 	
+ 	<delete id="deleteReport" parameterType="int">
+ 		delete from report_quiz where q_id = #{id}
+ 	</delete>
+ 	
+ 	<delete id="deleteQuiz" parameterType="int">
+ 		delete from quiz where id = #{id}
+ 	</delete>
+ 	
+ 	<update id="switchAnswer" parameterType="int">
+ 		update quiz set answer = case when answer = 'o' then 'x' else 'o' end where id = #{id}
+ 	</update> 	
+ 
+ 	<select id="selectReportType1" parameterType="int" resultType="int">
+ 		select count(*) from report_quiz where reason = 1 and q_id = #{id}
+ 	</select>
+ 	
+ 	<select id="selectReportType2" parameterType="int" resultType="int">
+ 		select count(*) from report_quiz where reason = 2 and q_id = #{id}
+ 	</select>
+ 	
+ 	<select id="selectReportType3" parameterType="int" resultType="int">
+ 		select count(*) from report_quiz where reason = 3 and q_id = #{id}
+ 	</select>
+ 
+  </mapper>

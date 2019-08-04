@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.myquiz.quiz.tempQuiz">
+   
+  <select id="tquizSelect" resultType="com.myquiz.quiz.domain.TempQuizVO">
+  		select * from temp_quiz
+  	</select>
+  	
+  	<select id="tqOne" parameterType="int" resultType="com.myquiz.quiz.domain.TempQuizVO">
+  		select * from temp_quiz where id = #{id}
+  	</select>
+  	
+  	<insert id="tqToQ">
+  		insert into quiz (m_id, quiz, answer, category) 
+  		values (#{m_id}, #{quiz}, #{answer}, #{category})
+  	</insert>
+  	
+  	<delete id="tqdOne" parameterType="int">
+  		delete from temp_quiz where id = #{id}
+  	</delete>
+  	
+  	<insert id="insertTquiz" parameterType="com.myquiz.quiz.domain.TempQuizVO">
+  		insert into temp_quiz(m_id, quiz, answer) values (#{m_id}, #{quiz}, #{answer})
+  	</insert>
+  </mapper>
